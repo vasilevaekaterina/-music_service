@@ -1,1 +1,76 @@
-# -music_service
+CREATE TABLE IF NOT EXISTS Genres (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(40) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Artist (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Artistgenres (
+    id SERIAL PRIMARY KEY,
+    GenresID INTEGER NOT NULL REFERENCES Genres(id),
+    ArtistID INTEGER NOT NULL REFERENCES Artist(id)
+);
+
+CREATE TABLE IF NOT EXISTS Album (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(200) NOT NULL,
+    year INTEGER CHECK (year >= 1900 AND year <= 2100)
+);
+
+CREATE TABLE IF NOT EXISTS Artistalbum (
+    id SERIAL PRIMARY KEY,
+    ArtistID INTEGER NOT NULL REFERENCES Artist(id),
+    AlbumID INTEGER NOT NULL REFERENCES Album(id)
+);
+
+CREATE TABLE IF NOT EXISTS Track (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(200) NOT NULL,
+    time TIME,
+    AlbumID INTEGER NOT NULL REFERENCES Album(id)
+);
+
+CREATE TABLE IF NOT EXISTS Collection (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(200) NOT NULL,
+    year INTEGER CHECK (year >= 1900 AND year <= 2100),
+    TrackID INTEGER NOT NULL REFERENCES Track(id)
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
