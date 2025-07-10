@@ -1,0 +1,50 @@
+SET search_path TO music;
+
+
+CREATE TABLE IF NOT EXISTS genre (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(40) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS artist (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS artist_genres (
+    id SERIAL PRIMARY KEY,
+    genre_id INTEGER NOT NULL REFERENCES genre(id),
+    artist_id INTEGER NOT NULL REFERENCES artist(id)
+);
+
+CREATE TABLE IF NOT EXISTS album (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(200) NOT NULL,
+    year INTEGER CHECK (year >= 1900)
+);
+
+CREATE TABLE IF NOT EXISTS artist_album (
+    id SERIAL PRIMARY KEY,
+    artist_id INTEGER NOT NULL REFERENCES artist(id),
+    album_ID INTEGER NOT NULL REFERENCES album(id)
+);
+
+CREATE TABLE IF NOT EXISTS track (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(200) NOT NULL,
+    time INTEGER NOT NULL,
+    CHECK (time > 0 AND time <= 900),
+    album_id INTEGER NOT NULL REFERENCES album(id)
+);
+
+CREATE TABLE IF NOT EXISTS collection (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(200) NOT NULL,
+    year INTEGER CHECK (year >= 1900)
+);
+
+CREATE TABLE IF NOT EXISTS track_collection (
+    id SERIAL PRIMARY KEY,
+    track_id INTEGER NOT NULL REFERENCES track(id),
+    collection_id INTEGER NOT NULL REFERENCES collection(id)
+);
